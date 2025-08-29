@@ -1,9 +1,11 @@
 import { useState } from 'react'
 import Canvas3D from './components/Canvas3D'
+import CanvasControls from './components/CanvasControls'
 import './App.css'
 
 function App() {
   const [showSidebar, setShowSidebar] = useState(false)
+  const [is2DMode, setIs2DMode] = useState(false)
 
   return (
     <div className="app">
@@ -27,7 +29,11 @@ function App() {
       <div className="main-content">
         {/* 3D Canvas */}
         <div className="canvas-container">
-          <Canvas3D />
+          <Canvas3D is2DMode={is2DMode} />
+          <CanvasControls 
+            is2DMode={is2DMode} 
+            onToggle2D={setIs2DMode} 
+          />
         </div>
 
         {/* Right Sidebar - Hidden by default */}

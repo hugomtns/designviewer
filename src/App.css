@@ -60,6 +60,45 @@ html, body, #root {
   background-color: #7f8c8d;
 }
 
+/* Canvas Controls */
+.canvas-controls {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 50;
+}
+
+/* Camera Toggle */
+.camera-toggle {
+  display: flex;
+  background-color: rgba(52, 73, 94, 0.9);
+  border-radius: 4px;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+}
+
+.toggle-button {
+  height: 36px;
+  padding: 0 16px;
+  background-color: transparent;
+  color: #bdc3c7;
+  border: none;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.toggle-button.active {
+  background-color: #3498db;
+  color: white;
+}
+
+.toggle-button:hover:not(.active) {
+  background-color: #4a5f7a;
+  color: white;
+}
+
 /* Main Content Area */
 .main-content {
   margin-top: 60px; /* Account for fixed top bar */

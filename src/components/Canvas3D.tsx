@@ -1,13 +1,25 @@
+import { useRef } from 'react'
 import { Canvas } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei'
 
-const Canvas3D = () => {
+interface Canvas3DProps {
+  is2DMode: boolean
+}
+
+const Canvas3D = ({ is2DMode }: Canvas3DProps) => {
+  const controlsRef = useRef<any>(null)
+
   return (
     <Canvas
-      camera={{ 
+      camera={is2DMode ? {
+        position: [0, 50, 0],
+        up: [0, 0, -1],
+        fov: 60
+      } : { 
         position: [10, 10, 10], 
         fov: 60 
       }}
+      orthographic={is2DMode}
       style={{ background: '#87CEEB' }}
     >
       {/* Lighting */}
@@ -18,12 +30,15 @@ const Canvas3D = () => {
         castShadow
       />
 
-      {/* Controls for panning, zooming, rotating */}
+      {/* Controls with different settings for 2D vs 3D */}
       <OrbitControls 
+        ref={controlsRef}
         enablePan={true}
         enableZoom={true}
-        enableRotate={true}
-        maxPolarAngle={Math.PI / 2} // Prevent going below ground
+        enableRotate={is2DMode ? false : true}
+        maxPolarAngle={is2DMode ? 0 : Math.PI / 2} // No rotation below ground in 3D, no vertical rotation in 2D
+        minPolarAngle={is2DMode ? 0 : 0}
+        target={[0, 0, 0]}
       />
 
       {/* Test cube to verify 3D is working */}
