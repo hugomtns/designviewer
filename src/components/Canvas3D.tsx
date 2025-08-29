@@ -1,5 +1,5 @@
 import { Canvas } from '@react-three/fiber'
-import { OrbitControls, Grid } from '@react-three/drei'
+import { OrbitControls } from '@react-three/drei'
 
 const Canvas3D = () => {
   return (
@@ -24,14 +24,6 @@ const Canvas3D = () => {
         enableZoom={true}
         enableRotate={true}
         maxPolarAngle={Math.PI / 2} // Prevent going below ground
-      />
-
-      {/* Ground Grid */}
-      <Grid 
-        args={[20, 20]} 
-        position={[0, 0, 0]}
-        cellColor="#34495e"
-        sectionColor="#2c3e50"
       />
 
       {/* Test cube to verify 3D is working */}
