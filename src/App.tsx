@@ -30,7 +30,7 @@ function App() {
       <div className="main-content">
         {/* 3D Canvas */}
         <div className="canvas-container">
-          <Canvas3D is2DMode={is2DMode} />
+          <Canvas3D is2DMode={is2DMode} designData={designData} />
           <CanvasControls 
             is2DMode={is2DMode} 
             onToggle2D={setIs2DMode} 

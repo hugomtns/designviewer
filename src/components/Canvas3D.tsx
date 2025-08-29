@@ -1,14 +1,15 @@
 import { useRef } from 'react'
 import { Canvas } from '@react-three/fiber'
 import { OrbitControls, OrthographicCamera } from '@react-three/drei'
-import * as THREE from 'three'
+import Terrain from './Terrain'
 import './Canvas3D.css'
 
 interface Canvas3DProps {
   is2DMode: boolean
+  designData: any
 }
 
-const Canvas3D = ({ is2DMode }: Canvas3DProps) => {
+const Canvas3D = ({ is2DMode, designData }: Canvas3DProps) => {
   const controlsRef = useRef<any>(null)
 
   return (
@@ -53,20 +54,13 @@ const Canvas3D = ({ is2DMode }: Canvas3DProps) => {
         target={[0, 0, 0]}
       />
 
+      {/* Terrain */}
+      <Terrain designData={designData} />
+
       {/* Test cube to verify 3D is working */}
       <mesh position={[0, 1, 0]} castShadow>
         <boxGeometry args={[1, 1, 1]} />
         <meshStandardMaterial color="#3498db" />
-      </mesh>
-
-      {/* Ground plane */}
-      <mesh 
-        rotation={[-Math.PI / 2, 0, 0]} 
-        position={[0, 0, 0]}
-        receiveShadow
-      >
-        <planeGeometry args={[100, 100]} />
-        <meshStandardMaterial color="#2ecc71" side={THREE.DoubleSide} />
       </mesh>
     </Canvas>
   )
