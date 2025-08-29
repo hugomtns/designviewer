@@ -1,6 +1,8 @@
 import { useRef } from 'react'
 import { Canvas } from '@react-three/fiber'
-import { OrbitControls } from '@react-three/drei'
+import { OrbitControls, OrthographicCamera } from '@react-three/drei'
+import * as THREE from 'three'
+import './Canvas3D.css'
 
 interface Canvas3DProps {
   is2DMode: boolean
@@ -11,17 +13,27 @@ const Canvas3D = ({ is2DMode }: Canvas3DProps) => {
 
   return (
     <Canvas
-      camera={is2DMode ? {
-        position: [0, 50, 0],
-        up: [0, 0, -1],
-        fov: 60
-      } : { 
+      camera={{ 
         position: [10, 10, 10], 
         fov: 60 
       }}
-      orthographic={is2DMode}
-      style={{ background: '#87CEEB' }}
+      className="canvas-3d"
     >
+      {/* Camera setup - only add orthographic camera in 2D mode */}
+      {is2DMode && (
+        <OrthographicCamera
+          makeDefault
+          zoom={1}
+          top={50}
+          bottom={-50}
+          left={50}
+          right={-50}
+          near={1}
+          far={200}
+          position={[0, 100, 0]}
+        />
+      )}
+
       {/* Lighting */}
       <ambientLight intensity={0.6} />
       <directionalLight 
@@ -30,14 +42,13 @@ const Canvas3D = ({ is2DMode }: Canvas3DProps) => {
         castShadow
       />
 
-      {/* Controls with different settings for 2D vs 3D */}
+      {/* Controls - same settings for both modes */}
       <OrbitControls 
         ref={controlsRef}
         enablePan={true}
         enableZoom={true}
-        enableRotate={is2DMode ? false : true}
-        maxPolarAngle={is2DMode ? 0 : Math.PI / 2} // No rotation below ground in 3D, no vertical rotation in 2D
-        minPolarAngle={is2DMode ? 0 : 0}
+        enableRotate={!is2DMode}
+        maxPolarAngle={Math.PI / 2}
         target={[0, 0, 0]}
       />
 
@@ -54,7 +65,7 @@ const Canvas3D = ({ is2DMode }: Canvas3DProps) => {
         receiveShadow
       >
         <planeGeometry args={[100, 100]} />
-        <meshStandardMaterial color="#2ecc71" />
+        <meshStandardMaterial color="#2ecc71" side={THREE.DoubleSide} />
       </mesh>
     </Canvas>
   )
