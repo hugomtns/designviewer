@@ -42,13 +42,14 @@ const Canvas3D = ({ is2DMode }: Canvas3DProps) => {
         castShadow
       />
 
-      {/* Controls - same settings for both modes */}
+      {/* Controls - different settings for 2D vs 3D */}
       <OrbitControls 
         ref={controlsRef}
         enablePan={true}
         enableZoom={true}
-        enableRotate={!is2DMode}
-        maxPolarAngle={Math.PI / 2}
+        enableRotate={true}
+        maxPolarAngle={is2DMode ? 0 : Math.PI / 2}
+        minPolarAngle={is2DMode ? 0 : 0}
         target={[0, 0, 0]}
       />
 
