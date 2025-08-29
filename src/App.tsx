@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import Canvas3D from './components/Canvas3D'
 import './App.css'
 
 function App() {
@@ -26,9 +27,7 @@ function App() {
       <div className="main-content">
         {/* 3D Canvas */}
         <div className="canvas-container">
-          <div className="canvas-placeholder">
-            3D Canvas will go here
-          </div>
+          <Canvas3D />
         </div>
 
         {/* Right Sidebar - Hidden by default */}
