@@ -16,7 +16,9 @@ const Canvas3D = ({ is2DMode, designData }: Canvas3DProps) => {
     <Canvas
       camera={{ 
         position: [10, 10, 10], 
-        fov: 60 
+        fov: 60,
+        near: 0.1,
+        far: 10000
       }}
       className="canvas-3d"
     >
@@ -29,8 +31,8 @@ const Canvas3D = ({ is2DMode, designData }: Canvas3DProps) => {
           bottom={-50}
           left={50}
           right={-50}
-          near={1}
-          far={200}
+          near={0.1}
+          far={10000}
           position={[0, 100, 0]}
         />
       )}
