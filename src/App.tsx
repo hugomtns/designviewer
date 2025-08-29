@@ -1,22 +1,23 @@
 import { useState } from 'react'
 import Canvas3D from './components/Canvas3D'
 import CanvasControls from './components/CanvasControls'
+import FileImport from './components/FileImport'
 import './App.css'
 
 function App() {
   const [showSidebar, setShowSidebar] = useState(false)
   const [is2DMode, setIs2DMode] = useState(false)
+  const [designData, setDesignData] = useState<any>(null)
 
   return (
     <div className="app">
       {/* Top Bar - Fixed */}
       <div className="top-bar">
-        <button className="top-bar-button inactive">
-          Import JSON
-        </button>
+        <FileImport onDataLoaded={setDesignData} />
         <button 
-          className="top-bar-button inactive"
+          className={`top-bar-button ${designData ? '' : 'inactive'}`}
           onClick={() => setShowSidebar(!showSidebar)}
+          disabled={!designData}
         >
           Show Design Details
         </button>
@@ -49,7 +50,22 @@ function App() {
               </button>
             </div>
             <div className="sidebar-content">
-              <p>Design details will appear here...</p>
+              {designData ? (
+                <div>
+                  <h4>Design Statistics</h4>
+                  <p><strong>Units:</strong> {designData.Units}</p>
+                  <p><strong>Total Frames:</strong> {designData.Layout?.Frames ? Object.keys(designData.Layout.Frames).length : 'N/A'}</p>
+                  <p><strong>Models:</strong> {designData.Models?.length || 'N/A'}</p>
+                  {designData.Statistics && (
+                    <>
+                      <h4>Statistics</h4>
+                      <pre>{JSON.stringify(designData.Statistics, null, 2)}</pre>
+                    </>
+                  )}
+                </div>
+              ) : (
+                <p>Import a JSON file to see design details...</p>
+              )}
             </div>
           </div>
         )}
